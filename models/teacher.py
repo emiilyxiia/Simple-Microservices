@@ -115,7 +115,7 @@ class TeacherCreate(TeacherBase):
 
 
 class TeacherUpdate(BaseModel):
-    """Partial update for a Teacher; supply only fields to change."""
+    """Full update for a Teacher."""
     uni: Optional[UNIType] = Field(
         None, description="Columbia UNI.", json_schema_extra={"example": "ab1234"}
     )

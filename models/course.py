@@ -69,7 +69,7 @@ class CourseCreate(CourseBase):
 
 
 class CourseUpdate(BaseModel):
-    """Partial update. All fields are optional"""
+    """Full update. All fields are optional"""
     code: Optional[str] = Field(None, description="olumbia University Course Code (4 uppercase letters + 4 digits).")
     title: Optional[str] = Field(None, description="Course title.")
     credits: Optional[int] = Field(None, ge=1, le=5, description="Number of course credits.")
@@ -79,6 +79,7 @@ class CourseUpdate(BaseModel):
         "json_schema_extra": {
             "examples": [
                 {
+                    "code": "COMS4701",
                     "title": "Cloud Computing",
                     "credits": 3,
                     "location": "501 Northwest Corner",

@@ -70,7 +70,7 @@ def get_course(course_id: UUID):
         raise HTTPException(status_code=404, detail="Course not found")
     return courses[course_id]
 
-@app.patch("/courses/{course_id}", response_model=CourseRead)
+@app.put("/courses/{course_id}", response_model=CourseRead)
 def update_course(course_id: UUID, update: CourseUpdate):
     if course_id not in courses:
         raise HTTPException(status_code=404, detail="Course not found")
@@ -79,6 +79,12 @@ def update_course(course_id: UUID, update: CourseUpdate):
     courses[course_id] = CourseRead(**stored)
     return courses[course_id]
 
+@app.delete("/courses/{course_id}", status_code=204)
+def delete_course(course_id: UUID):
+    if course_id not in courses:
+        raise HTTPException(status_code=404, detail="Course not found")
+    del courses[course_id]
+    return None
 # -----------------------------------------------------------------------------
 # Teacher endpoints
 # -----------------------------------------------------------------------------
@@ -133,7 +139,7 @@ def get_teacher(teacher_id: UUID):
         raise HTTPException(status_code=404, detail="Teacher not found")
     return teachers[teacher_id]
 
-@app.patch("/teachers/{teacher_id}", response_model=TeacherRead)
+@app.put("/teachers/{teacher_id}", response_model=TeacherRead)
 def update_teacher(teacher_id: UUID, update: TeacherUpdate):
     if teacher_id not in teachers:
         raise HTTPException(status_code=404, detail="Teacher not found")
@@ -141,6 +147,13 @@ def update_teacher(teacher_id: UUID, update: TeacherUpdate):
     stored.update(update.model_dump(exclude_unset=True))
     teachers[teacher_id] = TeacherRead(**stored)
     return teachers[teacher_id]
+
+@app.delete("/teachers/{teacher_id}", status_code=204)
+def delete_teacher(teacher_id: UUID):
+    if teacher_id not in teachers:
+        raise HTTPException(status_code=404, detail="Teacher not found")
+    del teachers[teacher_id]
+    return None
 
 # # -----------------------------------------------------------------------------
 # # Address endpoints
